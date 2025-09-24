@@ -1,4 +1,6 @@
-import { Entity, Column, PrimaryGeneratedColumn } from "typeorm";
+import { User } from 'src/auth/entities/user.entity';
+import { Location } from './../../locations/entities/location.entity';
+import { Entity, Column, PrimaryGeneratedColumn, OneToOne, JoinColumn } from "typeorm";
 @Entity()
 export class Manager {
     @PrimaryGeneratedColumn('uuid')
@@ -11,4 +13,13 @@ export class Manager {
     managerEmail: string;
     @Column('text')
     managerPhoneNumber: string;
+
+    @OneToOne(() => Location)
+    location:Location;
+
+    @OneToOne(() => User)
+    @JoinColumn({
+        name: "userId"
+    })
+    user: User;
 }
