@@ -2,29 +2,50 @@ import { OmitType } from '@nestjs/mapped-types';
 import { Employee } from '../entities/employee.entity';
 import { IsEmail, IsObject, IsOptional, IsString, MaxLength } from 'class-validator';
 import { Location } from 'src/locations/entities/location.entity';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+
+export class LocationEmployeeDto extends Location{
+    @ApiProperty()
+    declare locationId: number;
+
+    @ApiPropertyOptional()
+    declare locationName: string;
+
+    @ApiPropertyOptional()
+    declare locationLatLng: number[];
+
+    @ApiPropertyOptional()
+    declare locationAddress: string;
+
+}
 
 export class CreateEmployeeDto extends OmitType(Employee, [
-  'employeeId',
-  'employeePhoto',
-  'user',
+    'employeeId',
+    'employeePhoto',
+    'user',
 ] as const) {
-  @IsString()
-  @MaxLength(30)
-  employeeName: string;
+    @ApiProperty()
+    @IsString()
+    @MaxLength(30)
+    employeeName: string;
 
-  @IsString()
-  @MaxLength(70)
-  employeeLastName: string;
+    @ApiProperty()
+    @IsString()
+    @MaxLength(70)
+    employeeLastName: string;
 
-  @IsString()
-  @MaxLength(10)
-  employeePhoneNumber: string;
+    @ApiProperty()
+    @IsString()
+    @MaxLength(10)
+    employeePhoneNumber: string;
 
-  @IsString()
-  @IsEmail()
-  employeeEmail: string;
+    @ApiProperty()
+    @IsString()
+    @IsEmail()
+    employeeEmail: string;
 
-  @IsOptional()
-  @IsObject()
-  location: Location;
+    @ApiPropertyOptional()
+    @IsOptional()
+    @IsObject()
+    location: LocationEmployeeDto;
 }
