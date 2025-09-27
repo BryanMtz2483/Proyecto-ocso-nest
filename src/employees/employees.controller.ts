@@ -31,6 +31,17 @@ export class EmployeesController {
   }
 
   @Auth(ROLES.MANAGER, ROLES.EMPLOYEE)
+  @ApiResponse({
+    status: 201,
+    example: {
+      employeeId: "UUID",
+      employeeName: "Bryan",
+      employeeEmail: "Bryan@gmail.com",
+      employeeLastName: "Martinez",
+      employeePhoneNumber:"4423383448",
+      employeePhoto: "URL"
+    } as Employee
+  })
   @Post('upload')
   @UseInterceptors(FileInterceptor('file', {
     dest: "./src/employees/employees-photos"

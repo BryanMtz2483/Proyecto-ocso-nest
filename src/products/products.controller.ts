@@ -5,6 +5,8 @@ import { UpdateProductDto } from './dto/update-product.dto';
 import { Auth } from 'src/auth/decorators/auth.decorator';
 import { ROLES } from 'src/auth/constants/roles.constants';
 import { ApiAuth } from 'src/auth/decorators/api.decorator';
+import { Product } from './entities/product.entity';
+import { ApiResponse } from '@nestjs/swagger';
 
 @ApiAuth()
 @Controller('products')
@@ -12,6 +14,15 @@ export class ProductsController {
   constructor(private readonly productsService: ProductsService) {}
 
   @Auth(ROLES.EMPLOYEE, ROLES.MANAGER)
+  @ApiResponse({
+        status: 201,
+        example: {
+          productId: "UUID",
+          productName: "Sabritas crema y especias",
+          price: 30,
+          countSeal: 3,
+        } as Product
+      })
   @Post()
   create(@Body() createProductDto: CreateProductDto) {
     return this.productsService.create(createProductDto);
