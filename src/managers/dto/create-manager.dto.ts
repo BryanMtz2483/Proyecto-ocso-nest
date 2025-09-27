@@ -1,6 +1,7 @@
-import { IsEmail, IsNumber, IsString, MaxLength } from "class-validator";
+import { IsEmail, IsNumber, IsObject, IsOptional, IsString, MaxLength } from "class-validator";
 import { Manager } from "../entities/manager.entity";
 import { OmitType } from "@nestjs/mapped-types";
+import { Location } from "src/locations/entities/location.entity";
 
 export class CreateManagerDto extends OmitType(Manager, ['managerId' as const]){
     @IsString()
@@ -14,4 +15,7 @@ export class CreateManagerDto extends OmitType(Manager, ['managerId' as const]){
     @IsString()
     @MaxLength(16)
     declare managerPhoneNumber: string;
+    @IsObject()
+    @IsOptional()
+    location: Location;
 }

@@ -1,6 +1,7 @@
-import { ArrayNotEmpty, IsArray, IsString, MaxLength } from "class-validator";
+import { ArrayNotEmpty, IsArray, IsObject, IsOptional, IsString, MaxLength } from "class-validator";
 import { Location } from "../entities/location.entity";
 import { OmitType } from "@nestjs/mapped-types";
+import { Region } from "src/regions/entities/region.entity";
 
 export class CreateLocationDto extends OmitType(Location, ['locationId'] as const) {
     @IsString()
@@ -14,4 +15,8 @@ export class CreateLocationDto extends OmitType(Location, ['locationId'] as cons
     @IsArray()
     @ArrayNotEmpty()
     locationLatLng: number[];
+
+    @IsObject()
+    @IsOptional()
+    region: Region;
 }
