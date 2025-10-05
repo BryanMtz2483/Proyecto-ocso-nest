@@ -21,7 +21,7 @@ export class AuthService {
         userEmail : loginUserDto.userEmail
       }
     });
-    if(!user) throw new NotFoundException();
+    if(!user) throw new UnauthorizedException("No estás autorizado");
     const match = await bcrypt.compare(
       loginUserDto.userPassword, 
       user.userPassword
