@@ -28,14 +28,13 @@ export class AuthController {
   @Post("login")
   async login(@Body() loginUserDto: LoginUserDto, @Res({passthrough: true}) response: Response, @Cookies() cookies: any){
     const token = await this.authService.loginUser(loginUserDto)
-    console.log(token)
     response.cookie(TOKEN_NAME, token,{
       httpOnly: false,
       secure: true,
       sameSite: 'none',
       maxAge: 1000 * 60 * 60 * 24 * 7,
     })
-    return;
+    return token;
   }
   @Patch("/:email")
   updateUser(@Param('email') userEmail: string ,@Body() updateUserDto: UpdateUserDto){
